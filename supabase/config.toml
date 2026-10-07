@@ -1,0 +1,52 @@
+# Supabase project configuration — Dahae Academy
+# Real project ref and keys never live here; see .env.example.
+
+project_id = "dahae-academy"
+
+[db]
+port = 54322
+major_version = 17
+
+[auth]
+site_url = "http://localhost:3000"
+additional_redirect_urls = ["http://localhost:3000/auth/callback"]
+jwt_expiry = 3600
+enable_signup = true
+
+# Email is not the sign-up path (DEC-034) but it stays reachable, so its abuse limits are
+# stated here rather than left to the CLI defaults: `config push` writes every key it knows,
+# and the two below were being silently reset to "1 second" and "6 digits" on the project.
+[auth.email]
+enable_signup = true
+enable_confirmations = true
+max_frequency = "1m0s"
+otp_length = 8
+
+# Google OAuth is the primary student sign-up path (DEC-034).
+#
+# The two values are read from backend/.env and never written here: this file is committed,
+# and a client secret in a committed file is a client secret somebody has to rotate.
+#
+# No `redirect_uri`. That key is for the local stack; a hosted project answers on its own
+# address, and the one to register in the Google console is
+# https://ijauiiokhifuetcgiqlg.supabase.co/auth/v1/callback — Supabase's, not ours. Setting
+# it here to anything else is how the round trip ends on a page that does not exist.
+[auth.external.google]
+enabled = true
+client_id = "env(SUPABASE_AUTH_GOOGLE_CLIENT_ID)"
+secret = "env(SUPABASE_AUTH_GOOGLE_SECRET)"
+
+[storage]
+enabled = true
+file_size_limit = "50MiB"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[studio]
+enabled = true
+port = 54323

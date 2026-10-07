@@ -1,0 +1,6 @@
+.branches/
+.temp/
+node_modules/
+.env
+.env.local
+*.log

@@ -1,0 +1,17 @@
+{
+  "name": "dahae-academy-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Supabase project: migrations, RLS, seeds and generated types.",
+  "scripts": {
+    "check:sql": "node check-sql.mjs",
+    "seed:catalogue": "node seed/generate-catalogue.mjs",
+    "db:push": "supabase db push",
+    "db:types": "supabase gen types typescript --linked --schema public > types/database.ts"
+  },
+  "devDependencies": {
+    "libpg-query": "^17.7.0",
+    "supabase": "^2.116.0"
+  }
+}
